@@ -36,18 +36,15 @@ def fetch_poster(suggestion):
 
 
 
-def recommend_book(book_name):
-    books_list = []
+def recommend(book_name):
+    book_list = []
     book_id = np.where(book_pivot.index == book_name)[0][0]
-    distance, suggestion = model.kneighbors(book_pivot.iloc[book_id,:].values.reshape(1,-1), n_neighbors=6 )
-
+    distance, suggestion = model.kneighbors(book_pivot.iloc[book_id, :].values.reshape(1, -1), n_neighbors=6)
     poster_url = fetch_poster(suggestion)
-    
-    for i in range(len(suggestion)):
-            books = book_pivot.index[suggestion[i]]
-            for j in books:
-                books_list.append(j)
-    return books_list , poster_url       
+    books = book_pivot.index[suggestion[0]]
+    for j in books:
+        book_list.append(j)
+    return book_list, poster_url
 
 
 
